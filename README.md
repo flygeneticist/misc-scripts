@@ -1,4 +1,4 @@
-misc scipts
+Misc Scripts
 ===============
 This is a place where I will store various scripts I've written that do not warrent their own repositories:
 
