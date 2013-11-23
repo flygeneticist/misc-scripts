@@ -1,16 +1,20 @@
 # Written by: Kevin Keller
 # Creation date: Nov 02, 2013
-# Last modified date: Nov 03, 2013
-# Gets a webpage, given by the user, and returns a CSV file of Japanese sentences.
+# Last modified date: Nov 22, 2013
+# Gets a webpage, given by the user, and returns a TXT file of unique Japanese sentences.
 
 # import need modules
 from bs4 import BeautifulSoup
-import urllib, re, sys
+import urllib
+import re
 
 def get_user_url(): # function to get the url input from the user
   target_url = raw_input()
+  if target_url == "":
+    raise TypeError("Input cannot be an empty string.")
   return target_url
 
+'''
 def grab_and_parse_results(target_url): # function to get HTML from a url and parse into sentences
   # Grabs the HTML from the given url address
   html_soup = BeautifulSoup(urllib.urlopen(target_url))
@@ -20,9 +24,13 @@ def grab_and_parse_results(target_url): # function to get HTML from a url and pa
   # Returns a list based on a set of unique sentences only (removes duplicates)
   return list(set(re.findall(pattern, html_soup.decode('utf-8-sig'))))
 
+
 # RUN TIME CODE:
 target_url = get_user_url() # Get target url from the user
 list_of_sentences = grab_and_parse_results(target_url) # Grab and parse HTML into sentences
-# prints out each of the sentences to the terminal output
-for sentence in list_of_sentences:
-  print sentence
+# prints out each of the sentences to a file
+with open('ja_output.txt', mode='r', encoding='utf-8') as f:
+  f.write('JAPANESE SENTENCES FROM URL: {}'.format(target_url))
+  for sentence in list_of_sentences:
+    f.write(sentence)
+'''
