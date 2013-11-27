@@ -4,9 +4,9 @@
 # Gets a webpage, given by the user, and returns a TXT file of unique Japanese sentences.
 
 # import need modules
-from bs4 import BeautifulSoup
-import urllib
-import re
+#from bs4 import BeautifulSoup
+#import urllib
+#import re
 
 
 # function to get the url input from the user
@@ -16,7 +16,6 @@ def get_user_url():
     raise ValueError("Input cannot be an empty string.")
   return target_url
 
-
 # function to get HTML from a url and parse into sentences
 def grab_and_parse_results(target_url):
   html_soup = BeautifulSoup(urllib.urlopen(target_url)) # Grab the HTML from the given url address
@@ -24,6 +23,7 @@ def grab_and_parse_results(target_url):
   pattern = u'[\u3030-\u9FAF][\u3030-\u9FAF0-9A-Za-z\u3001\u2026 ]+[\u300D|\u3002|\uFF01|\uFF1F|\u2026]+'
   # Return a list based on a set of unique sentences only (removes duplicates)
   return list(set(re.findall(pattern, html_soup.decode('utf-8-sig'))))
+<<<<<<< HEAD
 
 # function to run scrapper and output results
 def run_scraper():
