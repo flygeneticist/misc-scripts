@@ -4,9 +4,9 @@
 # Gets a webpage, given by the user, and returns a TXT file of unique Japanese sentences.
 
 # import need modules
-#from bs4 import BeautifulSoup
-#import urllib
-#import re
+from bs4 import BeautifulSoup
+import urllib
+import re
 
 
 # function to get the url input from the user
