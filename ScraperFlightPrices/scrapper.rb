@@ -3,13 +3,15 @@ require 'open-uri'
 
 base_url = "http://http://www.faredetective.com"
 
-# grab all broad links to popular destinations
-# route_set = Set.new
+## grab all broad links to popular destinations
+# output = File::open("dest_links.txt", "w")
 # ("A".."Z").each do |alpha|
 #     url = "#{base_url}/farehistory/flights-index-#{alpha}.html"
-#     scrape(url, route_set)
+#     Nokogiri::HTML(open(url)).css("td:nth-child(1) > a").each do |l|   
+#         output << base_url + "#{l}"[/\/farehistory\/.*\.html/] + ",\n"
+#     end
 # end
-# write_file(route_set)
+# output.close
 
 # scrape each popular destination page and all subpages to get links for specific routes
 output = File.open( "route_links.txt", "w" )
