@@ -32,15 +32,16 @@ base_url = "http://http://www.faredetective.com"
 # output.close
 
 
-# Scrape the top-level page into output to get all routes links for all destinations
-output = File.open( "routes_links.txt", "w" )
+# Scrape the top-level page into output to get all route links for all destinations
+output = File.open( "route_links.txt", "w" )
 input = File::open("sub_dest_links.txt", "r")
 input.each do |dest|
     url = dest.chomp[0..-2]
     Nokogiri::HTML(open(url)).css("td:nth-child(1) > a").each do |l|   
-    route_link = base_url + "#{l}"[/\/farehistory\/.*\.html/] + ",\n"
-    output << route_link
-    puts route_link
+        route_link = base_url + "#{l}"[/\/farehistory\/.*\.html/] + ",\n"
+        output << route_link
+    end
+    puts "Scraped: #{url}"
 end
 input.close
 output.close
