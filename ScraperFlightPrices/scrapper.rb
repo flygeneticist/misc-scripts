@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
+require 'set'
 
 base_url = "http://http://www.faredetective.com"
 
@@ -46,19 +47,38 @@ base_url = "http://http://www.faredetective.com"
 # input.close
 # output.close
 
-## Post processing of route data to ensure clean/unique links
-# push route links data into a set to ensure no duplicate links
-input = File.open( "route_links.txt", "r" )
-unique_routes = Set.new
-input.each do |link|
-    unique_routes << link
+
+# # Post processing of route data to ensure clean/unique links
+# # push route links data into a set to ensure no duplicate links
+# input = File.open( "route_links.txt", "r" )
+# unique_routes = Set.new
+# input.each do |link|
+#     unique_routes << link
+# end
+# input.close
+# puts "Adding route links to file..."
+# # write unique links in set out to a new file
+# output = File.open( "route_links_clean.txt", "w" )
+# unique_routes.each do |link|
+#     output << link
+# end
+# output.close
+# puts "Cleaning of route links is complete!"
+
+
+# # Scrape all route links to pull historic pricing info
+output = File.open("historical_price_data.txt", "w")
+input = File.open( "route_links_clean_test.txt", "r" )
+input.each do |route|
+    url = route.chomp[0..-2]
+    puts "Scraping: #{url}"
+    airport_codes = url.scan(/[A-Z]{3}/)
+    data = Nokogiri::HTML(open(url)).css("div.div7")
+    flight_info =   "Depart:#{airport_codes[0]}" + "," + 
+                    "Arrive:#{airport_codes[1]}" + 
+                    "#{data}".gsub(/<\/?[^>]*>/,",").gsub(/(From|To):[A-Za-z ]*,/,"").gsub(/,\n,/,",")
+    output << flight_info
+    sleep 1.0 + rand
 end
 input.close
-puts "Adding route links to file..."
-# write unique links in set out to a new file
-output = File.open( "route_links_clean.txt", "w" )
-unique_routes.each do |link|
-    output << link
-end
 output.close
-puts "Cleaning of route links is complete!"

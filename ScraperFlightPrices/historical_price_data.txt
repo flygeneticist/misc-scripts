@@ -1,0 +1,2 @@
+Depart:CMB,Arrive:AAN,Lowest price found:784.37,Average price: 1235,Cheapest months to travel: May,
+Depart:PER,Arrive:AAN,Lowest price found:2222.71,Average price: 2223,Cheapest months to travel: October,
