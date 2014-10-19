@@ -19,13 +19,18 @@ ctry.each do |k,v|
             bedrooms = box.css('.bedrooms').text
             capacity = box.css('.accommodates').text
 
+            num_bedrooms = bedrooms.match /(\d+)/
+            num_capacity = capacity.match /(\d+)/
+            country = k.capitalize
+            city_name = city.gsub(", #{country}", "")
+
             results << {
-                "country" => k,
-                "city" => city,
+                "country" => country,
+                "city" => city_name,
                 "name" => name,
                 "price" => price.to_i,
-                "bedrooms" => bedrooms,
-                "capacity" => capacity
+                "bedrooms" => num_bedrooms[1].to_i,
+                "capacity" => num_capacity[1].to_i
             }
 
         end
