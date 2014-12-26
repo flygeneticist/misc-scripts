@@ -1,13 +1,13 @@
 require 'nokogiri'
 require 'open-uri'
-require 'pry'
+require 'json'
+# require 'pry'
 
 base_url = "https://www.airbnb.com"
 ctry = {"vietnam" => 24,"cambodia" => 4,"thailand" => 56, "panama" => 24, "nicaruagua" => 12, "costarica" => 56}
 
 ## grab all broad links to popular destinations
-output = File::open("airbnb_data.txt", "w")
-output << '['
+results = []
 
 ctry.each do |k,v|
     (1..v).each do |pg|
@@ -21,20 +21,25 @@ ctry.each do |k,v|
             beds = inner_pg_data.css('#summary > div > div > div.col-8 > div > div:nth-child(2) > div.col-9 > div > div:nth-child(4)').text[/\d+/]
             bedrooms = inner_pg_data.css('#summary > div > div > div.col-8 > div > div:nth-child(2) > div.col-9 > div > div:nth-child(3)').text[/\d+/]
             capacity = inner_pg_data.css('#summary > div > div > div.col-8 > div > div:nth-child(2) > div.col-9 > div > div:nth-child(2)').text[/\d+/]
-            output << "{'country'   : #{k},
-                        'city'      : #{city},
-                        'name'      : #{name},
-                        'price'     : #{price},
-                        'bedrooms'  : #{bedrooms},
-                        'beds'      : #{beds},
-                        'capacity'  : #{capacity}
-                    },"
+
+            country = k.capitalize
+            results << {
+                "country" => country,
+                "city" => city,
+                "name" => name,
+                "price" => price.to_i,
+                "bedrooms" => bedrooms.to_i,
+                "beds" => beds.to_i,
+                "capacity" => capacity.to_i
+            }
+
         end
         puts "I just scraped the F%!@* out of #{k} - pg #{pg}"
         sleep 1.0 + rand # sleep to avoid hitting the server too frequently
     end
 end
 
-output << "]"
+output = File::open("airbnb_data.txt", "w")
+output << results.to_json
 output.close
 puts "Done! ^_^"
