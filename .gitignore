@@ -49,4 +49,8 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-*.txt
+# Text files from flight scraping project
+ScraperFlightPrices/*.txt
+
+# C scripts compiled file
+C/*.out
